@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sort</title>
+</head>
+<body>
+    <input type="text" size="10" id="lengthOfArray">
+    <button id="getUserInputLength">Give me the length of an array!</button>
+    <script>
+        // create unsorted array
+        let unsortedArrayDom = document.createElement("p");
+        // create different function to do sort
+        let insertSt = document.createElement("p");
+        let insertStBr = document.createElement("p");
+        let bubbleSt = document.createElement("p");
+        let bubbleStBr = document.createElement("p");
+        // create different image for sort
+        let insertStImg = new Image();
+        let insertStBrImg = new Image();
+        let bubbleStImg = new Image();
+        let bubbleStBrImg = new Image();
+        
+        let handleUserInput = document.getElementById("getUserInputLength");
+        handleUserInput.addEventListener('click', function(e){
+            let unsortedArr = function() {
+                let promise = new Promise(function(resolve, reject){
+                    let num = document.getElementById("lengthOfArray").value;
+                    if(num) {
+                        resolve(num);
+                    } else {
+                        let log = "Please enter a number!"
+                        reject(new Error(log));
+                    }
+                    
+                })
+                return promise;
+            }
+            unsortedArr().then(function(num){
+                let array = [];
+                for(let i = 0; i < num; i++) {
+                    let ele = Math.floor(Math.random()*num);
+                    if(array.indexOf(ele) !== -1) {
+                        i--;
+                    } else {
+                        array[i] = ele;
+                    }
+                }
+                unsortedArrayDom.innerHTML = `The unsorted array is: ${array}`;
+                document.body.appendChild(unsortedArrayDom);
+
+                let insertSort = function(arr){
+                    for(let i = 0; i < arr.length; i++) {
+                        for(let j = i; j > 0; j--) {
+                            if(arr[j] < arr[j-1]) {
+                                let tempSpace = arr[j];
+                                arr[j] = arr[j-1];
+                                arr[j-1] = tempSpace;
+                            }
+                        }
+                    }
+                    return arr;
+                }
+                insertSt.innerHTML = `InsertSort array result: ${insertSort(array.slice())}`;
+                insertStImg.src = "./img/insertStImg.png";
+                insertStImg.setAttribute('style','width:500px');
+                document.body.appendChild(insertSt);
+                document.body.appendChild(insertStImg);
+
+                let insertSortBetter = function(arr){
+                    for(let i = 0; i < arr.length; i++) {
+                        let tempSpace = arr[i];
+                        let j;
+                        for(j = i; j > 0; j--) {
+                            if(arr[j-1] > tempSpace) {
+                                arr[j] = arr[j-1];
+                            } else {
+                                break;
+                            }
+                        }
+                        arr[j] = tempSpace;
+                    }
+                    return arr;
+                }
+                insertStBr.innerHTML = `InsertSort array better result: ${insertSortBetter(array.slice())}`;
+                insertStBrImg.src = "./img/insertStBrImg.png";
+                insertStBrImg.setAttribute("style", "width: 500px");
+                document.body.appendChild(insertStBr);
+                document.body.appendChild(insertStBrImg);
+
+                let bubbleSort = function(arr){
+                    for(let i = 0; i < arr.length; i++) {
+                        for(let j = 0; j < arr.length-1-i; j++) {
+                            if(arr[j]>arr[j+1]) {
+                                let temp = arr[j];
+                                arr[j] = arr[j+1];
+                                arr[j+1] = temp;
+                            }
+                        }
+                    }
+                    return arr;
+                }
+                bubbleSt.innerHTML = `BubbleSort array result: ${bubbleSort(array.slice())}`;
+                bubbleStImg.src = "./img/bubbleStImg.png";
+                bubbleStImg.setAttribute('style', 'width:500px;');
+                document.body.appendChild(bubbleSt);
+                document.body.appendChild(bubbleStImg)
+
+                let bubbleSortBetter = function(arr){
+                    let swapped;
+                    do{
+                        swapped = false;
+                        for(let i = 1; i < arr.length; i++) {
+                            if(arr[i-1] > arr[i]) {
+                                let tempEle = arr[i];
+                                arr[i] = arr[i-1];
+                                arr[i-1] = tempEle;
+                                swapped = true;
+                            }
+                        }
+                    }while(swapped);
+                    return arr; 
+                }
+                bubbleStBr.innerHTML = `BubbleSort array better result: ${bubbleSortBetter(array.slice())}`;
+                bubbleStBrImg.src = "./img/bubbleStBrImg.png";
+                bubbleStBrImg.setAttribute('style','width:500px');
+                document.body.appendChild(bubbleStBr);
+                document.body.appendChild(bubbleStBrImg);
+ 
+            }).catch(function(error) {
+                alert(error);
+            })
+        });
+
+        
+    </script>
+</body>
+</html>
+
